@@ -1,0 +1,52 @@
+{
+  "name": "anq-blog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test:live": "tsx tests/live.ts",
+    "setup:local": "tsx scripts/setup-local.ts",
+    "dev:local": "node scripts/dev-local.mjs",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.server.json --noEmit",
+    "build": "tsc -p tsconfig.server.json && vite build",
+    "test": "tsx --test tests/*.test.ts",
+    "test:browser": "tsx tests/browser.ts && tsx tests/search-browser.ts && tsx tests/moderation-browser.ts",
+    "migrate": "tsx src/server/migrate.ts",
+    "start": "node dist/server/main.js",
+    "test:local": "tsx tests/local-browser.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "member:create": "node --env-file=.env --import tsx src/server/provision.ts",
+    "test:container": "tsx tests/container.ts",
+    "dev": "node scripts/dev-local.mjs",
+    "dev:server": "node --env-file=.env --import tsx --watch src/server/main.ts",
+    "dev:client": "vite --host localhost",
+    "check": "npm run format:check && npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "@fastify/cookie": "11.1.3",
+    "@fastify/rate-limit": "11.2.1",
+    "@fastify/static": "10.1.7",
+    "fastify": "5.12.7",
+    "pg": "8.23.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
+    "@types/node": "26.6.5",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "prettier": "3.7.4",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vite": "8.3.5"
+  }
+}
