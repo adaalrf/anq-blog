@@ -1,8 +1,7 @@
 # ANQ Blog
 
 A small social publishing app: share a note, reply to someone, and return to the
-conversation. A clean remake of the original ANQ Blog, built with React,
-TypeScript, Fastify and PostgreSQL. The old source stays preserved in the archive.
+conversation. Built with React, TypeScript, Fastify and PostgreSQL.
 
 ## Run locally
 
@@ -49,7 +48,7 @@ the URL for refresh, sharing and Back navigation. Pagination restarts on refresh
 This is a small v1 with administrator-created accounts. Registration, password
 reset, uploads, notifications, nested reply trees and third-party sign-in are
 outside its scope. Do not deploy the local credentials as a shared writable
-public demo. See [v1 scope](docs/V1.md) and [case study](docs/CASE-STUDY.md).
+public demo.
 
 ## Reports and moderation
 
@@ -98,26 +97,8 @@ No uploads or persistent application filesystem are required. The image supports
 a read-only filesystem with a writable /tmp. Route the app at /; prefix hosting
 is not supported by its current absolute links.
 
-## Structure
-
-```text
-src/client/
-  App.tsx       Session/data coordination and route selection
-  pages/        Posts/threads, search, hidden posts, moderation and sign-in
-  layouts/      Shared sidebar, navigation, session controls and reading area
-  components/   Post cards/actions, composer, profile actions, pagination/headings
-  api.ts        HTTP requests and error handling
-  navigation.ts Same-document links, search forms and browser history
-  *.css         Local design tokens and responsive styles
-src/server/     HTTP/authentication, post queries, configuration and migrations
-src/shared/     Input schemas and response types
-migrations/    Ordered transactional SQL migrations
-scripts/       Repeatable local setup and development runner
-tests/         PostgreSQL integration, browser and actual-local smoke checks
-```
-
-No generic repository layer or shared UI package. Split modules when a concrete
-workflow needs it. See [design conventions](DESIGN.md) for visual changes.
+See [contributing](CONTRIBUTING.md) for the source map and
+[design conventions](DESIGN.md) for visual changes.
 
 ## Verify
 
@@ -155,10 +136,8 @@ configured Origin; non-local configuration requires HTTPS. Login and write route
 are rate limited. SQL uses bound parameters. Migrations are explicit, not run on
 server startup. Production build serves UI and API together via `npm start`.
 
-The current v1 is publicly available at https://blog.demo.adaalrf.dev, with
-fictional content and administrator-provided member accounts. Its deployment uses
-a dedicated rootless app/database account through ANQ Publish. The interface review described below is deployed and verified over public HTTPS. Earlier disposable deployment and recovery evidence is recorded in
-[deployment notes](docs/DEPLOYMENT.md). No GitHub publication has been performed.
+Try the [public demo](https://blog.demo.adaalrf.dev) with fictional content.
+See [deployment](docs/DEPLOYMENT.md) for hosting configuration.
 
 ## Navigation and loading
 
@@ -169,18 +148,6 @@ Pagination retains the displayed posts while loading the next result and disable
 page controls until it finishes; a new route/query starts at page one. There is
 no live polling loop. The desktop sidebar stays fixed while its background spans
 the complete document, including long-page screenshots.
-
-## Navigation and source organization review
-
-Page views live in `src/client/pages/`, reusable controls in `components/`, and the
-shared site shell in `layouts/`. `App.tsx` coordinates session and data loading;
-there is no additional router or state-management dependency. Community, Following
-and Search stay first in navigation for both guests and members. Browser titles
-identify the current view or member. The skip link focuses the main reading area;
-opening sign-in focuses the username and explains administrator-provided accounts.
-On signed-out member-only views, the required sign-in stays visible instead of
-offering a close control that cannot close it. Three-post pagination and retained
-posts during loading are preserved. These interface changes are verified locally and deployed to the public demo.
 
 ## Working on the project
 

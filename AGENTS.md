@@ -1,7 +1,6 @@
 # Working on ANQ Blog
 
-Read README.md and DESIGN.md. This is a clean remake; archive/anq-blog remains
-unchanged. Keep React/TypeScript/PostgreSQL and the current simple separation of
+Read README.md and DESIGN.md. Keep React/TypeScript/PostgreSQL and the current simple separation of
 client, HTTP/authentication and database queries. Do not add abstraction layers
 or infrastructure features without an actual product need.
 

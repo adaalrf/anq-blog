@@ -80,4 +80,8 @@ runtime images to Git. Preserve existing signing settings.
 Local sample members and the moderator have independent generated passwords.
 Public demo visitors can browse; publishing requires a provisioned member.
 Keep post text escaped through React and check ownership/moderator authority on
-the server. Read [design](DESIGN.md) and [v1 scope](docs/V1.md) before expanding it.
+the server. Read [design](DESIGN.md) and the README scope before expanding it.
+
+For visual changes, use the local CSS tokens and preserve contrast, visible
+keyboard focus, readable errors and text labels for status. Colour alone must
+not convey state. Keep screenshots fictional.
