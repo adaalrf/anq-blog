@@ -1,5 +1,7 @@
 # ANQ Blog
 
+[![Checks](https://github.com/adaalrf/anq-blog/actions/workflows/check.yml/badge.svg)](https://github.com/adaalrf/anq-blog/actions/workflows/check.yml)
+
 A small social publishing app: share a note, reply to someone, and return to the
 conversation. Built with React, TypeScript, Fastify and PostgreSQL.
 
