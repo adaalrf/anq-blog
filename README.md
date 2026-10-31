@@ -5,6 +5,10 @@
 A small social publishing app: share a note, reply to someone, and return to the
 conversation. Built with React, TypeScript, Fastify and PostgreSQL.
 
+Navigation keeps the desktop sidebar and uses a labelled, keyboard-accessible mobile
+menu with a return-to-top control. Colours follow the device’s light/dark preference.
+The browser suite checks both themes and mobile navigation with fictional data.
+
 ## Run locally
 
 Requires Linux, Node 24+, npm and rootless Podman. From this directory:

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { flushSync } from 'react-dom';
 
 // Keep ordinary links/forms usable, including modified clicks and new tabs.
 // Only this application's same-path navigation is handled without a reload.
@@ -6,7 +7,7 @@ export function useNavigation(onNavigate: (search: string) => void) {
   useEffect(() => {
     function navigate(url: URL) {
       if (url.href !== location.href) history.pushState(null, '', url);
-      onNavigate(url.search);
+      flushSync(() => onNavigate(url.search));
       window.scrollTo(0, 0);
       requestAnimationFrame(() => {
         document.querySelector<HTMLElement>('main h1')?.focus({ preventScroll: true });
@@ -56,7 +57,7 @@ export function useNavigation(onNavigate: (search: string) => void) {
       navigate(url);
     }
     function pop() {
-      onNavigate(location.search);
+      flushSync(() => onNavigate(location.search));
     }
     document.addEventListener('click', click);
     document.addEventListener('submit', submit);

@@ -7,6 +7,7 @@ import { Pagination } from '../components/Pagination.js';
 export function Search({ member }: { member: Member | null }) {
   const params = new URLSearchParams(location.search);
   const q = (params.get('q') || '').trim();
+  const [query, setQuery] = useState(q);
   const type = params.get('type') === 'members' ? 'members' : 'posts';
   const [cursors, setCursors] = useState<(string | null)[]>([null]);
   const [posts, setPosts] = useState<PostPage | null>(null);
@@ -60,7 +61,8 @@ export function Search({ member }: { member: Member | null }) {
             <input
               id="search-query"
               name="q"
-              defaultValue={q}
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
               maxLength={120}
               placeholder="A phrase, name, or topic…"
             />

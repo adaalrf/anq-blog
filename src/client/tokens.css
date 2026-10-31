@@ -1,5 +1,6 @@
 /* ANQ token contract: shared roles and metrics; this project owns its palette. */
 :root {
+  color-scheme: light;
   --color-canvas: #f4f8f9;
   --color-surface: #ffffff;
   --color-surface-soft: #eaf2f4;
@@ -28,4 +29,33 @@
   --radius-panel: 0.75rem;
   --width-sidebar: 15rem;
   --width-content: 48rem;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --color-canvas: #111c21;
+    --color-surface: #19272e;
+    --color-surface-soft: #22343d;
+    --color-ink: #e0edf2;
+    --color-muted: #b5c8d0;
+    --color-brand: #9ed3e0;
+    --color-brand-hover: #b8e3ed;
+    --color-sidebar: #152a34;
+    --color-on-brand: #13232b;
+    --color-line: #415862;
+    --color-focus: #9ed3e0;
+    --color-sidebar-muted: #d0dce0;
+    --color-danger: #ffb4a8;
+    --color-danger-surface: #412824;
+    --color-warning: #f2d48d;
+    --color-warning-surface: #3b301a;
+    --color-positive: #b3dcb7;
+    --color-positive-surface: #24382a;
+    --color-info: #b6d3f5;
+    --color-info-surface: #24354a;
+    --color-purple: #d7bff2;
+    --color-purple-surface: #352a43;
+    --color-accent: #34472b;
+  }
 }

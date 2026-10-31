@@ -1,3 +1,5 @@
+import { checkNavigationTheme } from './navigation-theme.js';
+import { workspaceLink } from './workspace-link.js';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { mkdir } from 'node:fs/promises';
@@ -121,7 +123,7 @@ try {
     ),
     'same-document',
   );
-  await author.getByRole('link', { name: 'Following', exact: true }).click();
+  await workspaceLink(author, 'Following');
   await expect(
     author.getByText('No posts from people you follow yet.', { exact: true }),
   ).toBeVisible();
@@ -132,7 +134,7 @@ try {
   await expect(
     author.getByRole('button', { name: 'Unfollow Jonas Lund', exact: true }),
   ).toBeVisible();
-  await author.getByRole('link', { name: 'Following', exact: true }).click();
+  await workspaceLink(author, 'Following');
   await expect(
     author.getByText('A note from Jonas for his followers.', { exact: true }),
   ).toBeVisible();
@@ -176,7 +178,7 @@ try {
   await expect(
     author.getByRole('button', { name: 'Follow Jonas Lund', exact: true }),
   ).toBeVisible();
-  await author.getByRole('link', { name: 'Following', exact: true }).click();
+  await workspaceLink(author, 'Following');
   await expect(
     author.getByText('No posts from people you follow yet.', { exact: true }),
   ).toBeVisible();
@@ -284,6 +286,7 @@ try {
   }
   await author.setViewportSize({ width: 390, height: 844 });
   await author.screenshot({ path: 'test-results/community-mobile.png', fullPage: true });
+  await checkNavigationTheme(author, config.origin, true);
   assert.deepEqual(errors, []);
   console.log(
     'Browser checks passed: two members, publish/reply/reload, ownership controls, edit/delete, profiles, follow/unfollow, following feed, sign-out/re-entry, pagination, responsive layout and accessibility scans.',

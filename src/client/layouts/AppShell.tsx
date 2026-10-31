@@ -1,3 +1,4 @@
+import { NavigationShell, BackToTop } from '../components/NavigationControls.js';
 import type { ReactNode, Dispatch, SetStateAction } from 'react';
 import type { SessionMember as Member } from '../../shared/model.js';
 
@@ -38,10 +39,13 @@ export function AppShell({
       <a className="skip" href="#content">
         Skip to content
       </a>
-      <div className="sidebar">
-        <a className="brand" href="/">
-          ANQ Blog<small>A little space to share</small>
-        </a>
+      <NavigationShell
+        brand={
+          <a className="brand" href="/">
+            ANQ Blog<small>A little space to share</small>
+          </a>
+        }
+      >
         <nav aria-label="Main navigation">
           <a
             href="/"
@@ -78,7 +82,8 @@ export function AppShell({
           <p>Notes. Ideas. Conversations.</p>
           <p>A slower corner of the web.</p>
         </div>
-      </div>
+      </NavigationShell>
+      <BackToTop />
       <div className="workspace">
         <header className="topbar">
           <span>

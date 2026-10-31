@@ -1,3 +1,4 @@
+import { workspaceLink } from './workspace-link.js';
 // Read-only smoke check of the actual Vite workspace; passwords never reach output.
 import assert from 'node:assert/strict';
 import { readFile, mkdir } from 'node:fs/promises';
@@ -26,7 +27,7 @@ try {
     await page.reload();
     await expect(page.getByRole('button', { name: 'Publish post', exact: true })).toBeVisible();
     if (credential.username === 'moderator') {
-      await page.getByRole('link', { name: 'Moderation', exact: true }).click();
+      await workspaceLink(page, 'Moderation');
       await expect(
         page.getByRole('heading', { name: 'Moderation queue.', exact: true }),
       ).toBeVisible();
@@ -50,7 +51,7 @@ try {
   await page.setViewportSize({ width: 390, height: 844 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await page.screenshot({ path: 'test-results/local-community-mobile.png', fullPage: true });
-  await page.getByRole('link', { name: 'Search', exact: true }).click();
+  await workspaceLink(page, 'Search');
   await page.getByLabel('Search the community', { exact: true }).fill('reading');
   await page.getByRole('button', { name: 'Search', exact: true }).click();
   await expect(
