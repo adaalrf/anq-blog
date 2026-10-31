@@ -56,6 +56,7 @@ try {
   async function search(q: string) {
     await page.getByLabel('Search the community', { exact: true }).fill(q);
     await page.getByRole('button', { name: 'Search', exact: true }).click();
+    await expect.poll(() => new URL(page.url()).searchParams.get('q')).toBe(q);
   }
   await page.evaluate(() => {
     (window as Window & { navigationMarker?: string }).navigationMarker = 'search-document';

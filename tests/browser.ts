@@ -103,11 +103,15 @@ try {
     .fill('A small beginning. Edited after a good conversation.');
   await author.getByRole('button', { name: 'Save changes', exact: true }).click();
   await expect(
-    author.getByText('A small beginning. Edited after a good conversation.', { exact: true }),
+    author
+      .locator('.post-body')
+      .filter({ hasText: 'A small beginning. Edited after a good conversation.' }),
   ).toBeVisible();
   await author.reload();
   await expect(
-    author.getByText('A small beginning. Edited after a good conversation.', { exact: true }),
+    author
+      .locator('.post-body')
+      .filter({ hasText: 'A small beginning. Edited after a good conversation.' }),
   ).toBeVisible();
   await author.evaluate(() => {
     (window as Window & { navigationMarker?: string }).navigationMarker = 'same-document';

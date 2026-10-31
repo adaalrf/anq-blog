@@ -62,6 +62,8 @@ export function Search({ member }: { member: Member | null }) {
               id="search-query"
               name="q"
               value={query}
+              // Native history restoration can bypass React's change tracking.
+              onInput={(event) => setQuery(event.currentTarget.value)}
               onChange={(event) => setQuery(event.target.value)}
               maxLength={120}
               placeholder="A phrase, name, or topic…"
