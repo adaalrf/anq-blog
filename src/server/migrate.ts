@@ -6,7 +6,7 @@ export async function migrate(pool: pg.Pool, directory = resolve('migrations')) 
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
-    await client.query('SELECT pg_advisory_xact_lock(72941801)');
+    await client.query('SELECT pg_advisory_xact_lock(72941803)');
     await client.query(
       'CREATE TABLE IF NOT EXISTS schema_migrations (name text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())',
     );

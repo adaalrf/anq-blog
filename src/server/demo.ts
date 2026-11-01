@@ -106,7 +106,7 @@ export async function seedDemo(pool: pg.Pool) {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
-    await client.query('SELECT pg_advisory_xact_lock(72941802)');
+    await client.query('SELECT pg_advisory_xact_lock(72941804)');
     // Random discarded secrets: these fixture accounts provide no public login.
     const passwordHash = await hashPassword(randomBytes(32).toString('hex'));
     for (const [username, name, bio] of members) {
