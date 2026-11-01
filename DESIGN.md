@@ -27,6 +27,6 @@ we can refine once the core workflows are complete.
 
 Page views belong in `src/client/pages/`, shared controls in `components/`, and
 the sidebar/topbar/reading area in `layouts/AppShell.tsx`. Keep route data loading
-in `App.tsx`, plain-text rendering in React, and the existing three-post page size.
+in `App.tsx`, plain-text rendering in React, and the six-post page size.
 Primary navigation stays in the same order across sessions. Browser titles and
 keyboard focus must identify the current view; opening sign-in focuses Username.

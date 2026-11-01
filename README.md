@@ -33,7 +33,7 @@ The development-only database password is not suitable for a public database.
 
 ## v1 features
 
-- Public chronological feed and member profiles, with cursor pagination (three posts per page).
+- Public chronological feed and member profiles, with cursor pagination (six posts per page).
 - Public post/member search with literal, case-insensitive matching and cursor pagination.
 - Follow/unfollow from profiles, with follower/following counts and a private
   following feed. Repeating a follow or unfollow is safe; self-follow is rejected.
@@ -166,3 +166,7 @@ API and Vite after local setup; `dev:local` remains an alias. For a custom manua
 configuration, run `npm run dev:server` and `npm run dev:client` separately.
 
 To add the fictional sample community after migrations, run `SEED_DEMO=true DATABASE_URL=… npm run seed` against your intended demo database. It adds 18 conversations with replies, profiles, follows and a removed-post example. Repeating the command preserves existing posts, edits, passwords and roles. Sample accounts have discarded random passwords; this does not create a public login. Set `DEMO_NOTICE=true` to show the sample-content notice and case-study link. Permissions are unchanged.
+
+Production writes structured server errors to the service log. PostgreSQL connections have a 5-second acquisition timeout and queries a 10-second statement timeout; Fastify’s request timeout applies to receiving requests.
+
+Author deletion clears the post body, but existing reports retain their text snapshot for moderators. Moderator removal hides a post while preserving its stored text.

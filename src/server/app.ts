@@ -1,4 +1,4 @@
-import Fastify from 'fastify';
+import Fastify, { type FastifyServerOptions } from 'fastify';
 import cookie from '@fastify/cookie';
 import rateLimit from '@fastify/rate-limit';
 import staticFiles from '@fastify/static';
@@ -21,8 +21,17 @@ import { searchMembers } from './search.js';
 import { hidePost, reportPost, listReports, decideReport } from './moderation.js';
 const params = z.object({ id: z.uuid() });
 const memberParams = z.object({ username: z.string().regex(/^[a-z][a-z0-9_]{2,29}$/) });
-export async function createApp(pool: pg.Pool, config: Config) {
-  const app = Fastify({ trustProxy: config.trustProxy, bodyLimit: 16_384, requestTimeout: 15_000 });
+export async function createApp(
+  pool: pg.Pool,
+  config: Config,
+  options: { logger?: FastifyServerOptions['logger'] } = {},
+) {
+  const app = Fastify({
+    logger: options.logger ?? false,
+    trustProxy: config.trustProxy,
+    bodyLimit: 16_384,
+    requestTimeout: 15_000,
+  });
   await app.register(cookie);
   await app.register(rateLimit, { global: false });
   const dummyHash = await hashPassword('unused-comparison-password');
@@ -75,11 +84,12 @@ export async function createApp(pool: pg.Pool, config: Config) {
     if (!user.isModerator) fail(403, 'Moderator access is required.');
     return user;
   };
-  app.get('/healthz', async (_, reply) => {
+  app.get('/healthz', async (request, reply) => {
     try {
       await pool.query('SELECT id FROM members LIMIT 1');
       return { status: 'ok' };
-    } catch {
+    } catch (error) {
+      request.log.error(error);
       return reply.code(503).send({ status: 'unavailable' });
     }
   });
