@@ -72,6 +72,28 @@ export async function checkNavigationTheme(source: Page, origin: string, hasMenu
       }
     }
     assert.notEqual(canvases[0], canvases[1], 'System preference changes the colour palette');
+    const appearance = page.getByRole('switch', { name: 'Dark mode' });
+    await expect(appearance).toBeVisible();
+    await appearance.focus();
+    await page.keyboard.press('Space');
+    await expect(appearance).toHaveAttribute('aria-checked', 'false');
+    await page.reload();
+    await expect(appearance).toHaveAttribute('aria-checked', 'false');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    await page.emulateMedia({ colorScheme: 'light' });
+    await appearance.click();
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await expect(page.locator('body')).toHaveCSS('color', 'rgb(224, 237, 242)');
+    const other = await source.context().newPage();
+    await other.goto(origin);
+    await other.getByRole('switch', { name: 'Dark mode' }).click();
+    await expect(appearance).toHaveAttribute('aria-checked', 'false');
+    await other.close();
+    await page.evaluate(() => localStorage.removeItem('anq-blog-theme'));
+    await page.reload();
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await expect(appearance).toHaveAttribute('aria-checked', 'true');
   } finally {
     await page.close();
   }

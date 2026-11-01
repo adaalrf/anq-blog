@@ -31,8 +31,8 @@
   --width-content: 48rem;
 }
 
-@media screen and (prefers-color-scheme: dark) {
-  :root {
+@media screen {
+  :root[data-theme='dark'] {
     color-scheme: dark;
     --color-canvas: #111c21;
     --color-surface: #19272e;

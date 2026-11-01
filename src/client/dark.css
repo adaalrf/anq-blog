@@ -1,27 +1,27 @@
 /* Dark equivalents for component accents; the main palette lives in tokens.css. */
-@media screen and (prefers-color-scheme: dark) {
-  input,
-  select,
-  textarea {
+@media screen {
+  :root[data-theme='dark'] input,
+  :root[data-theme='dark'] select,
+  :root[data-theme='dark'] textarea {
     background-color: var(--color-surface);
     color: var(--color-ink);
   }
-  ::placeholder {
+  :root[data-theme='dark'] ::placeholder {
     color: var(--color-muted);
     opacity: 1;
   }
-  .primary {
+  :root[data-theme='dark'] .primary {
     color: var(--color-on-brand);
   }
-  .sidebar,
-  .site-header,
-  aside {
+  :root[data-theme='dark'] .sidebar,
+  :root[data-theme='dark'] .site-header,
+  :root[data-theme='dark'] aside {
     --color-on-brand: #f2f7f5;
   }
 }
-@media screen and (prefers-color-scheme: dark) {
-  .sidebar nav a[aria-current='page'],
-  .sidebar nav a:hover {
+@media screen {
+  :root[data-theme='dark'] .sidebar nav a[aria-current='page'],
+  :root[data-theme='dark'] .sidebar nav a:hover {
     color: var(--color-canvas);
     background: var(--color-brand);
   }

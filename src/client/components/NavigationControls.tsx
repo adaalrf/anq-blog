@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { ThemeToggle } from './ThemeToggle.js';
 
 export function NavigationShell({ brand, children }: { brand: ReactNode; children: ReactNode }) {
   const [mobile, setMobile] = useState(() => matchMedia('(max-width: 760px)').matches);
@@ -51,6 +52,7 @@ export function NavigationShell({ brand, children }: { brand: ReactNode; childre
       }}
     >
       {brand}
+      <ThemeToggle />
       <button
         ref={toggle}
         className="navigation-toggle"
