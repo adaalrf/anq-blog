@@ -1,3 +1,4 @@
+import { parseTrustedProxies } from './proxy.js';
 export function loadConfig(env: NodeJS.ProcessEnv = process.env) {
   if (!env.DATABASE_URL) throw new Error('DATABASE_URL is required');
   const origin = env.APP_ORIGIN || 'http://localhost:5175';
@@ -12,6 +13,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env) {
   if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('Invalid PORT');
   return {
     databaseUrl: env.DATABASE_URL,
+    trustProxy: parseTrustedProxies(env.TRUST_PROXY_IPS),
     origin,
     secureCookie: url.protocol === 'https:',
     host: env.HOST || '127.0.0.1',

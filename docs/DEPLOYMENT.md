@@ -13,6 +13,12 @@ environment file. Keep the database off the public network and terminate TLS at
 the reverse proxy. `/healthz` checks database access and the initial schema;
 it does not verify a backup or every migration.
 
+Forwarded-IP headers are ignored by default. Set `TRUST_PROXY_IPS` to exact
+sanitizing-proxy addresses to keep client rate-limit budgets separate. `self`
+resolves current container addresses for verified rootless port forwarding;
+use it only with loopback-only published ports and a proxy that discards
+client-supplied forwarding headers. Limits are per client IP and process.
+
 ## Database and access
 
 Run `node dist/server/migrate.js` explicitly before startup. Startup does not
