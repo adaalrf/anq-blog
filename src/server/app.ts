@@ -83,7 +83,10 @@ export async function createApp(pool: pg.Pool, config: Config) {
       return reply.code(503).send({ status: 'unavailable' });
     }
   });
-  app.get('/api/session', async (request) => ({ member: await member(request) }));
+  app.get('/api/session', async (request) => ({
+    member: await member(request),
+    demoNotice: config.demoNotice,
+  }));
   app.get('/api/search/members', async (request) => searchMembers(pool, request.query));
   app.post(
     '/api/login',

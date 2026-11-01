@@ -5,6 +5,7 @@ import type { SessionMember as Member } from '../../shared/model.js';
 type Props = {
   member: Member | null;
   sessionReady: boolean;
+  demoNotice: boolean;
   login: boolean;
   setLogin: Dispatch<SetStateAction<boolean>>;
   logout: () => Promise<void>;
@@ -21,6 +22,7 @@ type Props = {
 export function AppShell({
   member,
   sessionReady,
+  demoNotice,
   login,
   setLogin,
   logout,
@@ -121,6 +123,17 @@ export function AppShell({
             ))}
         </header>
         <main id="content" tabIndex={-1} aria-busy={busy}>
+          {demoNotice && (
+            <aside className="demo-notice" aria-label="About this demo">
+              <p>
+                Fictional sample community. Browse conversations, profiles and search. Publishing
+                requires a provisioned account.
+              </p>
+              <a href="https://adaalrf.dev/work/anq-blog/">
+                A project by Martin Røed Flyum · About ANQ Blog
+              </a>
+            </aside>
+          )}
           {children}
         </main>
       </div>

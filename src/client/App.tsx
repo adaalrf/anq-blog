@@ -21,6 +21,7 @@ export function App() {
   const moderating = !postId && !username && params.get('view') === 'moderation';
   const special = searching || hidden || moderating;
   const following = !postId && !username && !special && params.get('feed') === 'following';
+  const [demoNotice, setDemoNotice] = useState(false);
   const [member, setMember] = useState<Member | null>(null),
     [sessionReady, setSessionReady] = useState(false),
     [login, setLogin] = useState(false);
@@ -48,9 +49,12 @@ export function App() {
   useEffect(() => {
     let current = true;
     const observedAuth = authRevision.current;
-    void api<{ member: Member | null }>('/session')
+    void api<{ member: Member | null; demoNotice: boolean }>('/session')
       .then((result) => {
-        if (current && observedAuth === authRevision.current) setMember(result.member);
+        if (current && observedAuth === authRevision.current) {
+          setMember(result.member);
+          setDemoNotice(result.demoNotice);
+        }
       })
       .catch((e) => {
         if (current && observedAuth === authRevision.current) setError(e.message);
@@ -143,6 +147,7 @@ export function App() {
       {...{
         member,
         sessionReady,
+        demoNotice,
         login,
         setLogin,
         logout,

@@ -210,7 +210,7 @@ try {
   const firstPageIds = await author
     .locator('article')
     .evaluateAll((nodes) => nodes.map((node) => node.textContent));
-  assert.equal(firstPageIds.length, 3);
+  assert.equal(firstPageIds.length, 6);
   let finishRequest!: () => void;
   const pending = new Promise<void>((resolve) => {
     finishRequest = resolve;
@@ -223,7 +223,7 @@ try {
   await expect(author.getByRole('main')).toHaveAttribute('aria-busy', 'true');
   assert.equal(
     await author.locator('article').count(),
-    3,
+    6,
     'current posts stay visible during pagination',
   );
   await expect(author.getByRole('button', { name: 'Newer posts', exact: true })).toBeDisabled();
@@ -234,7 +234,7 @@ try {
   const secondPage = await author
     .locator('article')
     .evaluateAll((nodes) => nodes.map((node) => node.textContent));
-  assert.equal(secondPage.length, 3);
+  assert.equal(secondPage.length, 6);
   assert.ok(
     secondPage.every((post) => !firstPageIds.includes(post)),
     'pages must not repeat posts',

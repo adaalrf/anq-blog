@@ -394,3 +394,14 @@ main:focus {
     flex-wrap: wrap;
   }
 }
+
+.demo-notice {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+.demo-notice p {
+  margin: 0 0 0.5rem;
+}

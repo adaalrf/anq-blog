@@ -164,3 +164,5 @@ See [contributing and development](CONTRIBUTING.md) for the source map, everyday
 commands, test prerequisites and troubleshooting. `npm run dev` starts both the
 API and Vite after local setup; `dev:local` remains an alias. For a custom manual
 configuration, run `npm run dev:server` and `npm run dev:client` separately.
+
+To add the fictional sample community after migrations, run `SEED_DEMO=true DATABASE_URL=… npm run seed` against your intended demo database. It adds 18 conversations with replies, profiles, follows and a removed-post example. Repeating the command preserves existing posts, edits, passwords and roles. Sample accounts have discarded random passwords; this does not create a public login. Set `DEMO_NOTICE=true` to show the sample-content notice and case-study link. Permissions are unchanged.

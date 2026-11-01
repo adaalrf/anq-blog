@@ -63,7 +63,7 @@ try {
   });
   await search('fieldnotes');
   await expect(
-    page.getByText('3 posts on this page for “fieldnotes”.', { exact: true }),
+    page.getByText('6 posts on this page for “fieldnotes”.', { exact: true }),
   ).toBeVisible();
   assert.equal(
     await page.evaluate(() => (window as Window & { navigationMarker?: string }).navigationMarker),
@@ -72,13 +72,13 @@ try {
   );
   await page.getByRole('button', { name: 'Next page', exact: true }).click();
   await expect(
-    page.getByText('3 posts on this page for “fieldnotes”.', { exact: true }),
+    page.getByText('6 posts on this page for “fieldnotes”.', { exact: true }),
   ).toBeVisible();
   await expect(page.getByRole('button', { name: 'Next page', exact: true })).toBeEnabled();
   // Submitting even the same query must restart at page one.
   await search('fieldnotes');
   await expect(
-    page.getByText('3 posts on this page for “fieldnotes”.', { exact: true }),
+    page.getByText('6 posts on this page for “fieldnotes”.', { exact: true }),
   ).toBeVisible();
   await page.reload();
   await expect(page.getByLabel('Search the community')).toHaveValue('fieldnotes');
@@ -109,6 +109,10 @@ try {
   await expect(page.getByRole('heading', { name: 'Conversation', exact: true })).toBeVisible();
   await page.goBack();
   await expect(page.getByLabel('Search the community')).toHaveValue('needle_%');
+  // Wait for the restored results, rather than typing during native history restoration.
+  await expect(
+    page.getByText('1 post on this page for “needle_%”.', { exact: true }),
+  ).toBeVisible();
   await search('');
   await expect(
     page.getByText('Enter a word or phrase to find posts and members.', { exact: true }),
@@ -128,7 +132,7 @@ try {
   await expect(page.getByRole('alert')).toContainText('Search temporarily unavailable.');
   await page.getByRole('button', { name: 'Try again', exact: true }).click();
   await expect(
-    page.getByText('3 posts on this page for “fieldnotes”.', { exact: true }),
+    page.getByText('6 posts on this page for “fieldnotes”.', { exact: true }),
   ).toBeVisible();
   const scan = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
   assert.deepEqual(

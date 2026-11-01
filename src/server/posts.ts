@@ -27,7 +27,7 @@ export async function listPosts(
   const input = z
     .object({
       cursor: z.string().max(1000).optional(),
-      limit: z.coerce.number().int().min(1).max(50).default(3),
+      limit: z.coerce.number().int().min(1).max(50).default(6),
       feed: z.enum(['community', 'following']).default('community'),
       q: z.string().trim().min(1, 'Enter a search term.').max(120).optional(),
       author: z

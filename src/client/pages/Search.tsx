@@ -7,7 +7,6 @@ import { Pagination } from '../components/Pagination.js';
 export function Search({ member }: { member: Member | null }) {
   const params = new URLSearchParams(location.search);
   const q = (params.get('q') || '').trim();
-  const [query, setQuery] = useState(q);
   const type = params.get('type') === 'members' ? 'members' : 'posts';
   const [cursors, setCursors] = useState<(string | null)[]>([null]);
   const [posts, setPosts] = useState<PostPage | null>(null);
@@ -61,10 +60,8 @@ export function Search({ member }: { member: Member | null }) {
             <input
               id="search-query"
               name="q"
-              value={query}
-              // Native history restoration can bypass React's change tracking.
-              onInput={(event) => setQuery(event.currentTarget.value)}
-              onChange={(event) => setQuery(event.target.value)}
+              // This GET form submits the DOM value, including native Back restoration.
+              defaultValue={q}
               maxLength={120}
               placeholder="A phrase, name, or topic…"
             />
@@ -99,7 +96,7 @@ export function Search({ member }: { member: Member | null }) {
           <>
             <p className="muted" role="status">
               {result.items.length
-                ? `${result.items.length} ${type} on this page`
+                ? `${result.items.length} ${result.items.length === 1 ? (type === 'posts' ? 'post' : 'member') : type} on this page`
                 : `No ${type} found`}{' '}
               for “{q}”.
             </p>

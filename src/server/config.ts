@@ -11,7 +11,10 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env) {
     throw new Error('HTTPS is required outside localhost');
   const port = Number(env.PORT || 8082);
   if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('Invalid PORT');
+  if (env.DEMO_NOTICE && !['true', 'false'].includes(env.DEMO_NOTICE))
+    throw new Error('DEMO_NOTICE must be true or false');
   return {
+    demoNotice: env.DEMO_NOTICE === 'true',
     databaseUrl: env.DATABASE_URL,
     trustProxy: parseTrustedProxies(env.TRUST_PROXY_IPS),
     origin,
