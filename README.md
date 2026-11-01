@@ -5,6 +5,8 @@
 A small social publishing app: share a note, reply to someone, and return to the
 conversation. Built with React, TypeScript, Fastify and PostgreSQL.
 
+![Community feed with fictional members and posts](docs/screenshots/community-desktop.png)
+
 Navigation keeps the desktop sidebar and uses a labelled, keyboard-accessible mobile
 menu with a return-to-top control. Colours follow the device’s light/dark preference
 until the navigation’s appearance switch is used; that choice is saved in the browser.
