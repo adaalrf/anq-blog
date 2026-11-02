@@ -17,14 +17,14 @@ The demo contains fictional conversations; publishing requires a provisioned acc
 
 - [PostCard](src/client/components/PostCard.tsx) keeps feed and thread presentation together.
 - [Post queries](src/server/posts.ts) enforce ownership and version checks on writes.
-- [Browser workflows](tests/browser.ts) exercise two members, replies and conflicting edits.
+- [Browser workflows](tests/browser.ts) exercise two members, replies and ownership controls.
 
 ## How this project is developed
 
 AI coding agents write and revise implementation code. The maintainer directs
 product scope, architecture and interface choices. [Project rules](AGENTS.md) guide
-changes, including server-side ownership and plain-text rendering. PostgreSQL and
-browser regressions check behavior such as stale edits and retained thread context.
+changes, including server-side ownership and plain-text rendering. PostgreSQL tests
+check stale edits; browser checks cover member workflows and retained thread context.
 
 The [initial public release](https://github.com/adaalrf/anq-blog/commit/6cc9203) is a squashed snapshot of pre-publication development; subsequent changes are recorded incrementally.
 
