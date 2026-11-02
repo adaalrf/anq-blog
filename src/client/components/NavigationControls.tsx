@@ -45,7 +45,7 @@ export function NavigationShell({ brand, children }: { brand: ReactNode; childre
   }, [open]);
   return (
     <aside
-      className="sidebar navigation-shell"
+      className="navigation-shell"
       ref={shell}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget as Node)) setOpen(false);

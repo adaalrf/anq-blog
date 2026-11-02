@@ -29,7 +29,10 @@ export function PostCard({
     }
   }
   return (
-    <article className="panel" aria-label={`Post by ${post.displayName}`}>
+    <article
+      className={post.parentId ? 'post reply' : 'post'}
+      aria-label={`Post by ${post.displayName}`}
+    >
       <header className="post-header">
         <span className="avatar" aria-hidden="true">
           {post.displayName[0]}

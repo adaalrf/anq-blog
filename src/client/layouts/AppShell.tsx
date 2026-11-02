@@ -80,10 +80,6 @@ export function AppShell({
             </a>
           )}
         </nav>
-        <div className="sidebar-footer">
-          <p>Notes. Ideas. Conversations.</p>
-          <p>A slower corner of the web.</p>
-        </div>
       </NavigationShell>
       <BackToTop />
       <div className="workspace">
@@ -136,6 +132,9 @@ export function AppShell({
           )}
           {children}
         </main>
+        <footer className="site-footer">
+          <p>Notes. Ideas. Conversations. A slower corner of the web.</p>
+        </footer>
       </div>
     </div>
   );

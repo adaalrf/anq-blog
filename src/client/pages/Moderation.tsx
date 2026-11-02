@@ -45,7 +45,9 @@ function ReportReview({ report, onDecision }: { report: Report; onDecision: () =
         </>
       )}
       <p>
-        <a href={`?post=${report.threadId}`}>Open thread</a>
+        <a className="text-link" href={`?post=${report.threadId}`}>
+          Open thread
+        </a>
       </p>
       {report.state === 'open' ? (
         <form onSubmit={decide}>

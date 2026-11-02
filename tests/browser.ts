@@ -243,9 +243,9 @@ try {
   await author.getByRole('button', { name: 'Newer posts', exact: true }).click();
   await expect(author.getByText('Page 1', { exact: true })).toBeVisible();
   await expect(author.getByRole('main')).toHaveAttribute('aria-busy', 'false');
-  // A full-page capture must retain the sidebar colour below the first viewport.
-  const sidebarColour = await author
-    .locator('.sidebar')
+  // A full-page capture must retain the page's ground below the first viewport.
+  const groundColour = await author
+    .locator('body')
     .evaluate((node) =>
       getComputedStyle(node).backgroundColor.match(/\d+/g)!.slice(0, 3).map(Number),
     );
@@ -264,8 +264,8 @@ try {
   }, longCapture.toString('base64'));
   assert.deepEqual(
     belowViewportColour,
-    sidebarColour,
-    'sidebar background must continue below the viewport in a long-page capture',
+    groundColour,
+    'page background must continue below the viewport in a long-page capture',
   );
   await author.setViewportSize(previousViewport);
   await author.getByRole('button', { name: 'Sign out', exact: true }).click();
