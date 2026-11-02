@@ -72,7 +72,7 @@ Family defaults:
 - Use JavaScript where it earns its place, and load nothing the page does not
   need. Each project's settings say whether it must, or should, work without
   JavaScript.
-- An arrow (↗) marks a link that leaves the site; internal links and in-page
-  jumps go without.
+- An arrow (↗) marks a link to another website; internal links, in-page jumps
+  and mail links go without.
 - Identity lines are sentences ("Web developer in Norway"), not dot-joined
   fragments. Middle dots belong only inside dense data rows.
