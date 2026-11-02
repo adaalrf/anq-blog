@@ -172,8 +172,8 @@ document. Back/Forward and direct links still work; modified clicks/new tabs
 retain normal browser behaviour. Session state is rechecked on navigation.
 Pagination retains the displayed posts while loading the next result and disables
 page controls until it finishes; a new route/query starts at page one. There is
-no live polling loop. The desktop sidebar stays fixed while its background spans
-the complete document, including long-page screenshots.
+no live polling loop. The masthead stays at the top while the page scrolls, and the
+page background spans the complete document, including long-page screenshots.
 
 ## Working on the project
 

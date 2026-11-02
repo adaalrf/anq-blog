@@ -25,18 +25,18 @@ replace its configuration. Do not copy a production `.env` into local setup.
 
 ## Where changes belong
 
-| Task                                 | Files                                           |
-| ------------------------------------ | ----------------------------------------------- |
-| Page structure and navigation        | `src/client/pages/`, `src/client/App.tsx`       |
-| Reusable UI and forms                | `src/client/components/`                        |
-| Header/sidebar and shared page frame | `src/client/layouts/`                           |
-| Colours, spacing and layout          | `src/client/tokens.css`, `src/client/style.css` |
-| HTTP routes and authorization        | `src/server/app.ts`                             |
-| Credentials and session rules        | `src/server/auth.ts`, `src/server/config.ts`    |
-| Validation and domain rules          | `src/shared/`                                   |
-| Database changes                     | New numbered SQL file in `migrations/`          |
-| Local startup/setup                  | `scripts/`                                      |
-| API and browser regressions          | `tests/`                                        |
+| Task                           | Files                                           |
+| ------------------------------ | ----------------------------------------------- |
+| Page structure and navigation  | `src/client/pages/`, `src/client/App.tsx`       |
+| Reusable UI and forms          | `src/client/components/`                        |
+| Masthead and shared page frame | `src/client/layouts/`                           |
+| Colours, spacing and layout    | `src/client/tokens.css`, `src/client/style.css` |
+| HTTP routes and authorization  | `src/server/app.ts`                             |
+| Credentials and session rules  | `src/server/auth.ts`, `src/server/config.ts`    |
+| Validation and domain rules    | `src/shared/`                                   |
+| Database changes               | New numbered SQL file in `migrations/`          |
+| Local startup/setup            | `scripts/`                                      |
+| API and browser regressions    | `tests/`                                        |
 
 `App.tsx` coordinates session/data loading and mutations. Pages own their views;
 components own reusable presentation. Keep this direct structure rather than
