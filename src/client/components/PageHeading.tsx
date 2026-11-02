@@ -24,19 +24,6 @@ export function PageHeading({
 }: Props) {
   return (
     <header className="page-heading">
-      <p className="eyebrow">
-        {hidden
-          ? 'Your reading preferences'
-          : moderating
-            ? 'Community care'
-            : searching
-              ? 'Explore the community'
-              : postId
-                ? 'Keep the conversation going'
-                : username
-                  ? 'Meet the community'
-                  : 'From the community'}
-      </p>
       <h1 tabIndex={-1}>
         {hidden
           ? 'Hidden posts.'
