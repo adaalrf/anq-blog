@@ -28,6 +28,10 @@ export function PostCard({
       setBusy(false);
     }
   }
+  const threadLink = !post.parentId,
+    ownControls =
+      member?.id === post.authorId && !post.deleted && !post.removed && !post.hidden && !editing,
+    readerActions = Boolean(member && (member.id !== post.authorId || post.hidden));
   return (
     <article
       className={post.parentId ? 'post reply' : 'post'}
@@ -37,9 +41,18 @@ export function PostCard({
         <span className="avatar" aria-hidden="true">
           {post.displayName[0]}
         </span>
-        <div>
+        <div className="post-byline">
           <a href={`?profile=${post.username}`}>{post.displayName}</a>
-          <small>@{post.username}</small>
+          <small>
+            @{post.username} ·{' '}
+            <time dateTime={post.createdAt}>
+              {new Date(post.createdAt).toLocaleString(undefined, {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })}
+              {post.version > 1 && !post.deleted && !post.removed ? ' · edited' : ''}
+            </time>
+          </small>
         </div>
       </header>
       {editing ? (
@@ -65,41 +78,30 @@ export function PostCard({
                 : post.body}
         </p>
       )}
-      <footer className="post-footer">
-        <time dateTime={post.createdAt}>
-          {new Date(post.createdAt).toLocaleString(undefined, {
-            dateStyle: 'medium',
-            timeStyle: 'short',
-          })}
-          {post.version > 1 && !post.deleted && !post.removed ? ' · edited' : ''}
-        </time>
-        {!post.parentId && (
-          <a href={`?post=${post.id}`}>
-            {post.replyCount} {post.replyCount === 1 ? 'reply' : 'replies'} · Open thread
-          </a>
-        )}
-        {member?.id === post.authorId &&
-          !post.deleted &&
-          !post.removed &&
-          !post.hidden &&
-          !editing && (
-            <>
+      {error && (
+        <p className="error" role="alert">
+          {error}
+        </p>
+      )}
+      {(threadLink || ownControls || readerActions) && (
+        <footer className="post-footer">
+          {ownControls && (
+            <div className="actions">
               <button className="quiet" onClick={() => setEditing(true)}>
                 Edit
               </button>
               <button className="quiet danger" disabled={busy} onClick={() => void remove()}>
                 Delete
               </button>
-            </>
+            </div>
           )}
-      </footer>
-      {member && (member.id !== post.authorId || post.hidden) && (
-        <PostActions post={post} refresh={refresh} />
-      )}
-      {error && (
-        <p className="error" role="alert">
-          {error}
-        </p>
+          {readerActions && <PostActions post={post} refresh={refresh} />}
+          {threadLink && (
+            <a className="thread-link" href={`?post=${post.id}`}>
+              {post.replyCount} {post.replyCount === 1 ? 'reply' : 'replies'} · Open thread
+            </a>
+          )}
+        </footer>
       )}
     </article>
   );

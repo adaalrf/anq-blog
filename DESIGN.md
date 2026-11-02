@@ -4,22 +4,22 @@ ANQ Blog follows the ANQ family system.
 
 ## This project's settings
 
-- **Blueprint:** reading column. A `--width-measure` (38rem) column beside a
-  `--width-margin` (8rem) margin column, under a masthead on the canvas. No dark
-  sidebar.
+- **Blueprint:** reading column, as a single conversation stream: one
+  `--width-page` (40rem) column under a masthead on the canvas. No margin column
+  and no dark sidebar.
 - **Palette:** deep teal (`--color-brand` #245e6a) on pale slate
   (`--color-canvas` #f4f8f9).
 - **Density:** generous. Posts at `--text-md` with line height 1.8, ruled
-  entries `--space-5` to `--space-6` apart.
-- **Signature:** the author sits in the margin beside each post, and a hairline
-  thread line joins a conversation's replies. Below 760px the author moves above
-  the post and the thread line runs beside the replies.
+  entries `--space-5` apart.
+- **Signature:** each post opens with its author line (avatar, name, handle and
+  time), its actions sit a fixed step above the next rule, and a hairline thread
+  line joins a conversation's replies.
 
 `src/client/tokens.css` owns the contract, the family block and these settings;
 `src/client/style.css` owns layout and components. Use the shared `Composer` and
 `PostCard` components so feed, profiles and threads change together. Page views
 belong in `src/client/pages/`, shared controls in `components/` and the
-masthead and reading frame in `layouts/AppShell.tsx`. Primary navigation stays
+masthead and page frame in `layouts/AppShell.tsx`. Primary navigation stays
 in the same order across sessions; browser titles and keyboard focus identify
 the current view, and opening sign-in focuses Username.
 

@@ -299,7 +299,7 @@ textarea {
   display: none;
 }
 
-/* The reading column: a margin for authors and labels beside the measure. */
+/* The stream: one column of posts, each opening with its author. */
 .workspace {
   max-width: calc(var(--width-page) + 2 * var(--space-5));
   margin: 0 auto;
@@ -320,26 +320,8 @@ textarea {
 main {
   padding: var(--space-7) 0 var(--space-9);
 }
-main > * {
-  margin-left: calc(var(--width-margin) + var(--space-6));
-}
-main > .page-heading,
-main > .post {
-  margin-left: 0;
-}
 .page-heading {
-  display: grid;
-  grid-template-columns: var(--width-margin) minmax(0, 1fr);
-  column-gap: var(--space-6);
-  align-items: baseline;
   margin-bottom: var(--space-7);
-}
-.page-heading > * {
-  grid-column: 2;
-}
-.page-heading > .eyebrow {
-  grid-column: 1;
-  margin: 0;
 }
 .page-heading .muted {
   font-size: var(--text-lg);
@@ -376,26 +358,10 @@ main > .post {
   font-size: var(--text-base);
 }
 
-/* Posts: ruled entries with the author in the margin. */
+/* Posts: author line, text, and a footer kept a fixed step above the next rule. */
 .post {
-  display: grid;
-  grid-template-columns: var(--width-margin) minmax(0, 1fr);
-  column-gap: var(--space-6);
   border-top: 1px solid var(--color-line);
-  padding: var(--space-5) 0 var(--space-6);
-}
-.post > * {
-  grid-column: 2;
-  min-width: 0;
-}
-.post > .post-header {
-  grid-column: 1;
-  grid-row: 1 / span 5;
-  align-self: start;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-2);
-  margin: 0;
+  padding: var(--space-5) 0;
 }
 .post-header {
   display: flex;
@@ -406,13 +372,13 @@ main > .post {
 .avatar {
   display: grid;
   place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   background: var(--color-surface-soft);
   color: var(--color-brand);
   font-family: var(--font-heading);
-  font-size: var(--text-lg);
+  font-size: var(--text-md);
   flex-shrink: 0;
 }
 .post-header a {
@@ -429,23 +395,41 @@ main > .post {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
 }
+.post-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-3);
+}
+.post-byline small {
+  display: inline;
+}
 .post-body {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   line-height: 1.8;
+  margin-bottom: 0;
 }
 .post-footer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-3);
   color: var(--color-muted);
 }
-.post-footer time {
-  margin-right: auto;
+.post-footer .post-actions {
+  display: contents;
 }
-.post-actions {
-  margin-top: var(--space-3);
+.post-footer .thread-link {
+  margin-left: auto;
+  order: 2;
+}
+.post-footer .report-form,
+.post-footer .status,
+.post-footer .error {
+  flex-basis: 100%;
+  order: 3;
 }
 .report-form {
   border-top: 1px solid var(--color-line);
@@ -453,22 +437,19 @@ main > .post {
   margin-top: var(--space-3);
 }
 
-/* The thread line: replies hang from one hairline in the margin. */
+/* The thread line: replies hang from one hairline beside the conversation. */
 .post.reply {
   position: relative;
   border-top: 0;
-  padding-top: var(--space-4);
+  padding-left: var(--space-7);
 }
 .post.reply::before {
   content: '';
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
+  left: var(--space-4);
   border-left: 1px solid var(--color-line);
-}
-.post.reply > .post-header {
-  padding-left: var(--space-4);
 }
 .section-heading {
   margin-top: var(--space-7);
@@ -536,7 +517,6 @@ main > .post {
 }
 
 .site-footer {
-  margin-left: calc(var(--width-margin) + var(--space-6));
   border-top: 1px solid var(--color-line);
   padding: var(--space-5) 0 var(--space-7);
   color: var(--color-muted);
@@ -546,7 +526,7 @@ main > .post {
   margin: 0;
 }
 
-/* Below the margin column's width, authors and labels move above their entries. */
+/* Phones: the menu folds into a toggle; replies indent less. */
 @media (max-width: 760px) {
   html {
     scroll-padding-top: calc(var(--nav-height, 72px) + var(--space-5));
@@ -626,32 +606,11 @@ main > .post {
   main {
     padding-top: var(--space-5);
   }
-  main > *,
-  .site-footer {
-    margin-left: 0;
-  }
-  .page-heading,
-  .post {
-    display: block;
-  }
-  .page-heading > .eyebrow {
-    margin-bottom: var(--space-3);
-  }
-  .post > .post-header {
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: var(--space-3);
-  }
   .post.reply {
     padding-left: var(--space-6);
   }
-  .post.reply > .post-header {
-    padding-left: 0;
-  }
-  .post.reply .avatar {
-    width: 2rem;
-    height: 2rem;
-    font-size: var(--text-md);
+  .post.reply::before {
+    left: var(--space-3);
   }
   .panel {
     padding: var(--space-4);
