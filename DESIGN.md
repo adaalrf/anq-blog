@@ -49,10 +49,12 @@ Core rules, identical in every ANQ project:
    sans-serif. Self-hosted woff2; the CSP needs `font-src 'self'`.
 2. **Sentences stay serif**, even among controls; a link inside a sentence keeps
    the sentence's face.
-3. **Accents are colour only**: `--color-brand` on the emphasised phrase. No
+3. **Accents mark something.** Colour only (`--color-brand`), on a quote, the
+   current item or a status; at most one per view, never decoration. No
    italics, bold or underline for emphasis.
-4. **Labels** in mono capitals: `--text-xs`, `0.08em`, `--color-muted`. Number
-   them only when the order is real.
+4. **Labels** in mono, sentence case: `--text-ui`, `--color-muted`, no forced
+   capitals or tracking. A heading that introduces a list of titled entries is a
+   label. Number only a real sequence.
 5. **Rules before boxes.** 1px `--color-line` hairlines. Three surfaces only:
    Panel, Card, Frame. A shadow only where an element floats over content it
    would otherwise blend into, such as the back-to-top button; never for
@@ -65,6 +67,12 @@ Core rules, identical in every ANQ project:
    `--color-focus` outline, 44px targets, no motion under
    `prefers-reduced-motion`.
 
-Family default: use JavaScript where it earns its place, and load nothing the
-page does not need. Each project's settings say whether it must, or should, work
-without JavaScript.
+Family defaults:
+
+- Use JavaScript where it earns its place, and load nothing the page does not
+  need. Each project's settings say whether it must, or should, work without
+  JavaScript.
+- An arrow (↗) marks a link that leaves the site; internal links and in-page
+  jumps go without.
+- Identity lines are sentences ("Web developer in Norway"), not dot-joined
+  fragments. Middle dots belong only inside dense data rows.
