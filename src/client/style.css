@@ -80,9 +80,7 @@ h2 {
 }
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
+  font-size: var(--text-ui);
   line-height: 1.5;
   color: var(--color-muted);
   margin-bottom: var(--space-3);
@@ -226,9 +224,7 @@ textarea {
   display: block;
   margin-top: var(--space-1);
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
+  font-size: var(--text-ui);
 }
 .navigation-toggle {
   display: none;
