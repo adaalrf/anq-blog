@@ -34,16 +34,16 @@
 @media screen {
   :root[data-theme='dark'] {
     color-scheme: dark;
-    --color-canvas: #111c21;
-    --color-surface: #19272e;
-    --color-surface-soft: #22343d;
-    --color-ink: #e0edf2;
-    --color-muted: #b5c8d0;
+    --color-canvas: #112022;
+    --color-surface: #172d30;
+    --color-surface-soft: #1f3c40;
+    --color-ink: #e3edef;
+    --color-muted: #b5cdd0;
     --color-brand: #9ed3e0;
     --color-brand-hover: #b8e3ed;
-    --color-sidebar: #152a34;
+    --color-sidebar: #182e31;
     --color-on-brand: #13232b;
-    --color-line: #415862;
+    --color-line: #415f62;
     --color-focus: #9ed3e0;
     --color-sidebar-muted: #d0dce0;
     --color-danger: #ffb4a8;
