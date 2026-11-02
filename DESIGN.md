@@ -14,6 +14,8 @@ ANQ Blog follows the ANQ family system.
 - **Signature:** each post opens with its author line (avatar, name, handle and
   time), its actions sit a fixed step above the next rule, and a hairline thread
   line joins a conversation's replies.
+- **JavaScript:** a React application, so it needs JavaScript. Keep the
+  bundle lean and fetch only what the current view shows.
 
 `src/client/tokens.css` owns the contract, the family block and these settings;
 `src/client/style.css` owns layout and components. Use the shared `Composer` and
@@ -28,8 +30,7 @@ Form labels are sentences, so they stay serif. The server policy is
 
 ## Departures
 
-- **Core 8, usable without JavaScript:** Blog is a React application, so reading
-  and navigation need JavaScript. The rest of rule 8 holds.
+None.
 
 <!-- One line per broken core rule: the rule, what this project does instead, and why. -->
 
@@ -53,12 +54,17 @@ Core rules, identical in every ANQ project:
 4. **Labels** in mono capitals: `--text-xs`, `0.08em`, `--color-muted`. Number
    them only when the order is real.
 5. **Rules before boxes.** 1px `--color-line` hairlines. Three surfaces only:
-   Panel, Card, Frame. No shadows except the back-to-top button; no coloured side
-   bars.
+   Panel, Card, Frame. A shadow only where an element floats over content it
+   would otherwise blend into, such as the back-to-top button; never for
+   decoration. No coloured side bars.
 6. **One scale.** `--text-*`, `--space-*`, `--radius-frame`, `--radius-small`. No
    literal px except 1px borders, component geometry and breakpoints.
 7. **Same contract.** Keep the shared token names and the family block in
    `tokens.css`; change the look through the palette and the settings above.
 8. **Access** (never a departure): 4.5:1 text in both themes, a solid 3px
    `--color-focus` outline, 44px targets, no motion under
-   `prefers-reduced-motion`, usable without JavaScript.
+   `prefers-reduced-motion`.
+
+Family default: use JavaScript where it earns its place, and load nothing the
+page does not need. Each project's settings say whether it must, or should, work
+without JavaScript.
