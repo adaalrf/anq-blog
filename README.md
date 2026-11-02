@@ -2,15 +2,31 @@
 
 [![Checks](https://github.com/adaalrf/anq-blog/actions/workflows/check.yml/badge.svg)](https://github.com/adaalrf/anq-blog/actions/workflows/check.yml)
 
-A small social publishing app: share a note, reply to someone, and return to the
-conversation. Built with React, TypeScript, Fastify and PostgreSQL.
+A community application for posts, replies, profiles and following. The same
+conversation stays consistent across the feed, profile and thread, including
+conflicting edits and moderator removals. Built with React, TypeScript, Fastify
+and PostgreSQL.
+
+[Browse the demo](https://blog.demo.adaalrf.dev) · [Case study](https://adaalrf.dev/work/anq-blog/) · [Source map](CONTRIBUTING.md#where-changes-belong)
+
+The demo contains fictional conversations; publishing requires a provisioned account.
 
 ![Community feed with fictional members and posts](docs/screenshots/community-desktop.png)
 
-Navigation keeps the desktop sidebar and uses a labelled, keyboard-accessible mobile
-menu with a return-to-top control. Colours follow the device’s light/dark preference
-until the navigation’s appearance switch is used; that choice is saved in the browser.
-The browser suite checks both themes and mobile navigation with fictional data.
+## Review path
+
+- [PostCard](src/client/components/PostCard.tsx) keeps feed and thread presentation together.
+- [Post queries](src/server/posts.ts) enforce ownership and version checks on writes.
+- [Browser workflows](tests/browser.ts) exercise two members, replies and conflicting edits.
+
+## How this project is developed
+
+AI coding agents write and revise implementation code. The maintainer directs
+product scope, architecture and interface choices. [Project rules](AGENTS.md) guide
+changes, including server-side ownership and plain-text rendering. PostgreSQL and
+browser regressions check behavior such as stale edits and retained thread context.
+
+The [initial public release](https://github.com/adaalrf/anq-blog/commit/6cc9203) is a squashed snapshot of pre-publication development; subsequent changes are recorded incrementally.
 
 ## Run locally
 
@@ -100,8 +116,9 @@ podman build -t localhost/anq-blog:v1 .
 The pinned multi-stage image runs as the Node user, serves port 8080, and excludes
 .env, credentials, tests and development dependencies. Set DATABASE_URL and the
 exact HTTPS APP_ORIGIN in the protected environment. Run
-`node dist/server/migrate.js` explicitly before startup (or configure that as
-the anq-publish migration command). Use PostgreSQL backups through anq-publish.
+`node dist/server/migrate.js` explicitly before startup, or configure it as
+a pre-start migration step in your deployment. Keep encrypted PostgreSQL backups
+and verify recovery with an isolated restore.
 No uploads or persistent application filesystem are required. The image supports
 a read-only filesystem with a writable /tmp. Route the app at /; prefix hosting
 is not supported by its current absolute links.
