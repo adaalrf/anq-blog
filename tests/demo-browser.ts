@@ -38,6 +38,17 @@ try {
     'https://adaalrf.dev/work/anq-blog/',
   );
   await expect(page.locator('article')).toHaveCount(6);
+  // The sign-in card sits centred on the content.
+  await page.setViewportSize({ width: 1100, height: 844 });
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  const offCentre = await page.evaluate(() => {
+    const card = document.querySelector('.login')!.getBoundingClientRect();
+    const main = document.querySelector('main')!.getBoundingClientRect();
+    return card.left + card.width / 2 - (main.left + main.width / 2);
+  });
+  assert.ok(Math.abs(offCentre) < 1, `Sign-in is ${offCentre}px off centre`);
+  await page.getByRole('button', { name: 'Close sign in', exact: true }).click();
+  await page.setViewportSize({ width: 390, height: 844 });
   // The masthead rule starts and ends with the content.
   assert.equal(
     new Set(
