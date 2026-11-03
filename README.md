@@ -30,7 +30,7 @@ The [initial public release](https://github.com/adaalrf/anq-blog/commit/6cc9203)
 
 ## Run locally
 
-Requires Linux, Node 24+, npm and rootless Podman. From this directory:
+Requires Linux, Node 26+, npm and rootless Podman. From this directory:
 
 ```sh
 npm ci
