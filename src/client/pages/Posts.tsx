@@ -49,7 +49,7 @@ export function PostsPage({
         <>
           {post && (
             <>
-              <PostCard post={post} member={member} refresh={refresh} />
+              <PostCard post={post} member={member} refresh={refresh} inThread />
               {member && !post.deleted && !post.removed && !post.hidden && !post.parentId && (
                 <section className="panel">
                   <Composer

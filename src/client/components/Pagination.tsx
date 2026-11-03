@@ -18,7 +18,7 @@ export function Pagination({
   function change(next: (string | null)[]) {
     onChange(next);
     window.scrollTo(0, 0);
-    document.querySelector<HTMLElement>('main h1')?.focus({ preventScroll: true });
+    document.querySelector<HTMLElement>('.workspace h1')?.focus({ preventScroll: true });
   }
   return (
     <nav className="pagination" aria-label={label}>

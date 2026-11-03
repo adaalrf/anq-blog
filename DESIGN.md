@@ -21,7 +21,8 @@ ANQ Blog follows the ANQ family system.
 `src/client/style.css` owns layout and components. Use the shared `Composer` and
 `PostCard` components so feed, profiles and threads change together. Page views
 belong in `src/client/pages/`, shared controls in `components/` and the
-masthead and page frame in `layouts/AppShell.tsx`. Primary navigation stays
+masthead and page frame in `layouts/AppShell.tsx`. The top bar names each view;
+only a member's profile has a heading of its own. Primary navigation stays
 in the same order across sessions; browser titles and keyboard focus identify
 the current view, and opening sign-in focuses Username.
 

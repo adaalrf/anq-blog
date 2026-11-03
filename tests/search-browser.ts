@@ -47,9 +47,7 @@ try {
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto(config.origin);
   await page.getByRole('link', { name: 'Search', exact: true }).click();
-  await expect(
-    page.getByRole('heading', { name: 'Find your next conversation.', exact: true }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Search', exact: true })).toBeVisible();
   await expect(
     page.getByText('Enter a word or phrase to find posts and members.', { exact: true }),
   ).toBeVisible();

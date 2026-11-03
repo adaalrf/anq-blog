@@ -7,10 +7,12 @@ export function PostCard({
   post,
   member,
   refresh,
+  inThread = false,
 }: {
   post: Post;
   member: Member | null;
   refresh: () => void;
+  inThread?: boolean;
 }) {
   const [editing, setEditing] = useState(false),
     [busy, setBusy] = useState(false),
@@ -28,7 +30,7 @@ export function PostCard({
       setBusy(false);
     }
   }
-  const threadLink = !post.parentId,
+  const threadLink = !post.parentId && !inThread,
     ownControls =
       member?.id === post.authorId && !post.deleted && !post.removed && !post.hidden && !editing,
     readerActions = Boolean(member && (member.id !== post.authorId || post.hidden));

@@ -92,7 +92,7 @@ export function NavigationShell({ brand, children }: { brand: ReactNode; childre
           ) {
             setOpen(false);
             requestAnimationFrame(() => {
-              const heading = document.querySelector<HTMLElement>('main h1');
+              const heading = document.querySelector<HTMLElement>('.workspace h1');
               if (heading) {
                 heading.tabIndex = -1;
                 heading.focus({ preventScroll: true });
