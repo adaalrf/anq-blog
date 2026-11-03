@@ -38,6 +38,18 @@ try {
     'https://adaalrf.dev/work/anq-blog/',
   );
   await expect(page.locator('article')).toHaveCount(6);
+  // The masthead rule starts and ends with the content.
+  assert.equal(
+    new Set(
+      await page.evaluate(() =>
+        ['.navigation-shell', 'article.post', '.site-footer'].map((selector) => {
+          const { left, right } = document.querySelector(selector)!.getBoundingClientRect();
+          return `${Math.round(left)}-${Math.round(right)}`;
+        }),
+      ),
+    ).size,
+    1,
+  );
   // Standalone controls meet the family's 44px target; links inside a sentence are exempt.
   assert.deepEqual(
     await page.evaluate(() =>
