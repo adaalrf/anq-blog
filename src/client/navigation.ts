@@ -10,7 +10,7 @@ export function useNavigation(onNavigate: (search: string) => void) {
       flushSync(() => onNavigate(url.search));
       window.scrollTo(0, 0);
       requestAnimationFrame(() => {
-        document.querySelector<HTMLElement>('main h1')?.focus({ preventScroll: true });
+        document.querySelector<HTMLElement>('.workspace h1')?.focus({ preventScroll: true });
       });
     }
     function click(event: MouseEvent) {

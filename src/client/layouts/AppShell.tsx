@@ -86,19 +86,23 @@ export function AppShell({
         <header className="topbar">
           <span>
             Community /{' '}
-            {hidden
-              ? 'Hidden posts'
-              : moderating
-                ? 'Moderation'
-                : searching
-                  ? 'Search'
-                  : postId
-                    ? 'Conversation'
-                    : username
-                      ? 'Profile'
-                      : following
-                        ? 'Following'
-                        : 'Latest posts'}
+            {!hidden && !moderating && !searching && !postId && username ? (
+              'Profile'
+            ) : (
+              <h1 tabIndex={-1}>
+                {hidden
+                  ? 'Hidden posts'
+                  : moderating
+                    ? 'Moderation'
+                    : searching
+                      ? 'Search'
+                      : postId
+                        ? 'Conversation'
+                        : following
+                          ? 'Following'
+                          : 'Latest posts'}
+              </h1>
+            )}
           </span>
           {sessionReady &&
             (member ? (
@@ -121,13 +125,8 @@ export function AppShell({
         <main id="content" tabIndex={-1} aria-busy={busy}>
           {demoNotice && (
             <aside className="demo-notice" aria-label="About this demo">
-              <p>
-                Fictional sample community. Browse conversations, profiles and search. Publishing
-                requires a provisioned account.
-              </p>
-              <a href="https://adaalrf.dev/work/anq-blog/">
-                A project by Martin Røed Flyum · About ANQ Blog
-              </a>
+              <p>Fictional sample community; publishing needs an account.</p>
+              <a href="https://adaalrf.dev/work/anq-blog/">A project by Martin Røed Flyum</a>
             </aside>
           )}
           {children}

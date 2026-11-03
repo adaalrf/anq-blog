@@ -33,10 +33,31 @@ try {
   await expect(page.getByRole('complementary', { name: 'About this demo' })).toContainText(
     'Fictional sample community',
   );
-  await expect(
-    page.getByRole('link', { name: 'A project by Martin Røed Flyum · About ANQ Blog' }),
-  ).toHaveAttribute('href', 'https://adaalrf.dev/work/anq-blog/');
+  await expect(page.getByRole('link', { name: 'A project by Martin Røed Flyum' })).toHaveAttribute(
+    'href',
+    'https://adaalrf.dev/work/anq-blog/',
+  );
   await expect(page.locator('article')).toHaveCount(6);
+  // Standalone controls meet the family's 44px target; links inside a sentence are exempt.
+  assert.deepEqual(
+    await page.evaluate(() =>
+      [...document.querySelectorAll<HTMLElement>('.workspace a, .workspace button, header a')]
+        .filter((control) => {
+          const sentence = control.closest('p, li');
+          return !sentence || sentence.textContent.trim() === control.textContent.trim();
+        })
+        .filter((control) => control.getClientRects().length)
+        .filter(
+          (control) =>
+            Math.max(
+              control.getBoundingClientRect().height,
+              parseFloat(getComputedStyle(control, '::after').height) || 0,
+            ) < 44,
+        )
+        .map((control) => control.className + ':' + control.textContent.trim().slice(0, 24)),
+    ),
+    [],
+  );
   await expect(page.getByRole('button', { name: 'Older posts', exact: true })).toBeEnabled();
   const removed = page
     .locator('article')

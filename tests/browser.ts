@@ -94,9 +94,7 @@ try {
   ).toBeVisible();
   await author.reload();
   await expect(author.getByText('I am making a reading corner.', { exact: true })).toBeVisible();
-  await expect(
-    author.getByRole('link', { name: '1 reply · Open thread', exact: true }),
-  ).toBeVisible();
+  await expect(author.getByRole('link', { name: /Open thread/ })).toHaveCount(0);
   await author.getByRole('button', { name: 'Edit', exact: true }).click();
   await author
     .getByLabel('Edit your post', { exact: true })

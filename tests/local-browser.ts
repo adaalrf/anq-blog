@@ -15,9 +15,7 @@ try {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.goto('http://localhost:5175');
-  await expect(
-    page.getByRole('heading', { name: 'A place for your ideas.', exact: true }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Latest posts', exact: true })).toBeVisible();
   for (const credential of credentials) {
     await page.getByRole('button', { name: 'Sign in', exact: true }).click();
     await page.getByLabel('Username', { exact: true }).fill(credential.username);
@@ -28,9 +26,7 @@ try {
     await expect(page.getByRole('button', { name: 'Publish post', exact: true })).toBeVisible();
     if (credential.username === 'moderator') {
       await workspaceLink(page, 'Moderation');
-      await expect(
-        page.getByRole('heading', { name: 'Moderation queue.', exact: true }),
-      ).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Moderation', exact: true })).toBeVisible();
       const response = await context.request.get('http://localhost:5175/api/moderation/reports');
       assert.equal(response.status(), 200);
       await page.goto('http://localhost:5175');

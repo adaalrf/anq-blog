@@ -161,19 +161,9 @@ export function App() {
         special,
       }}
     >
-      <PageHeading
-        {...{
-          hidden,
-          moderating,
-          searching,
-          following,
-          postId,
-          username,
-          profile,
-          member,
-          setProfile,
-        }}
-      />
+      {username && !postId && !hidden && !moderating && !searching && (
+        <PageHeading {...{ profile, member, setProfile }} />
+      )}
       {(postId || username) && (
         <a className="back" href="/">
           ← Back to community

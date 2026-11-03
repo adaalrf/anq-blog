@@ -75,7 +75,7 @@ try {
   await observer.goto(`${config.origin}/?post=${first}`);
   await expect(observer.getByText('A note needing context.', { exact: true })).toBeVisible();
   await reader.getByRole('link', { name: 'Hidden posts', exact: true }).click();
-  await expect(reader.getByRole('heading', { name: 'Hidden posts.', exact: true })).toBeVisible();
+  await expect(reader.getByRole('heading', { name: 'Hidden posts', exact: true })).toBeVisible();
   await reader.getByRole('button', { name: 'Unhide', exact: true }).click();
   await expect(
     reader.getByText('You have no hidden posts. Hiding only affects your view.', { exact: true }),
@@ -102,7 +102,7 @@ try {
   await mod.goto(config.origin);
   await login(mod, 'moderator');
   await mod.getByRole('link', { name: 'Moderation', exact: true }).click();
-  await expect(mod.getByRole('heading', { name: 'Moderation queue.', exact: true })).toBeVisible();
+  await expect(mod.getByRole('heading', { name: 'Moderation', exact: true })).toBeVisible();
   await expect(
     mod.getByText('Please consider the surrounding conversation.', { exact: true }),
   ).toBeVisible();
