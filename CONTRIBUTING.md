@@ -2,7 +2,7 @@
 
 ## First run
 
-Use Linux, Node.js 24+, npm and rootless Podman. Run from the repository root:
+Use Linux, Node.js 26+, npm and rootless Podman. Run from the repository root:
 
 ```sh
 npm ci
