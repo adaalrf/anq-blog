@@ -2,35 +2,51 @@
 
 [![Checks](https://github.com/adaalrf/anq-blog/actions/workflows/check.yml/badge.svg)](https://github.com/adaalrf/anq-blog/actions/workflows/check.yml)
 
-A community application for posts, replies, profiles and following. The same
-conversation stays consistent across the feed, profile and thread, including
-conflicting edits and moderator removals. Built with React, TypeScript, Fastify
-and PostgreSQL.
+A small community blog, built to understand how one actually works.
 
-[Browse the demo](https://blog.demo.adaalrf.dev) · [Case study](https://adaalrf.dev/work/anq-blog/) · [Source map](CONTRIBUTING.md#where-changes-belong)
+[Browse the demo](https://blog.demo.adaalrf.dev) · [Read the case study](https://adaalrf.dev/work/anq-blog/)
 
-The demo contains fictional conversations; publishing requires a provisioned account.
+![The community feed, with fictional members and posts](docs/screenshots/community-desktop.png)
 
-![Community feed with fictional members and posts](docs/screenshots/community-desktop.png)
+The demo is open to browse and holds fictional conversations. Publishing needs an
+account.
 
-## Review path
+## Why it exists
 
-- [PostCard](src/client/components/PostCard.tsx) keeps feed and thread presentation together.
-- [Post queries](src/server/posts.ts) enforce ownership and version checks on writes.
-- [Browser workflows](tests/browser.ts) exercise two members, replies and ownership controls.
+Posting text is the easy part of a community site. The interesting questions come
+afterwards. What should happen when two open tabs edit the same post? When someone
+deletes a post that already has replies? When a moderator removes something, but
+there still needs to be a record of why?
 
-## How this project is developed
+This project works through those questions by building the whole thing rather than
+reaching for an existing platform. It isn't meant to replace one, but if it's useful
+to someone, that's a good thing.
 
-AI coding agents write and revise implementation code. The maintainer directs
-product scope, architecture and interface choices. [Project rules](AGENTS.md) guide
-changes, including server-side ownership and plain-text rendering. PostgreSQL tests
-check stale edits; browser checks cover member workflows and retained thread context.
+## What it does
 
-The [initial public release](https://github.com/adaalrf/anq-blog/commit/6cc9203) is a squashed snapshot of pre-publication development; subsequent changes are recorded incrementally.
+- Anyone can read the feed, profiles, threads and search.
+- Members can publish short plain-text posts and reply to each other.
+- Members can follow each other, with a feed of the people they follow.
+- An edit is stopped if the post changed after it was opened.
+- A deleted post leaves a placeholder, so its replies keep their context.
+- Members can hide a post for themselves or report it, and moderators record a
+  reason for each decision.
 
-## Run locally
+## How it works
 
-Requires Linux, Node 26+, npm and rootless Podman. From this directory:
+The feed, a profile and a thread all use the same post component, so a post behaves
+the same everywhere it appears. Each post carries a version number, and the server
+refuses a write based on an older one, which is what stops two open tabs from
+overwriting each other.
+
+Ownership and moderator rights are checked on the server, never only in the
+interface. Links, search and paging update the browser's history, so Back, Forward
+and shared links work.
+
+## Try it yourself
+
+You'll need Linux, Node.js 26 or newer, npm and rootless Podman. Then, from this
+directory:
 
 ```sh
 npm ci
@@ -38,152 +54,36 @@ npm run setup:local
 npm run dev
 ```
 
-Open **http://localhost:5175**. The API runs on loopback port 8082; PostgreSQL uses 55434. Setup creates three fictional accounts, **elin**, **jonas** and **moderator**, with separate
-random passwords in `.local/member-credentials.json`. Read that file locally to
-sign in; never publish it. No GitHub OAuth or external account is needed.
+Open <http://localhost:5175>. Setup starts a local PostgreSQL database and creates
+three fictional accounts: **elin**, **jonas** and **moderator**. Their generated
+passwords are in `.local/member-credentials.json`. Press Ctrl-C to stop; your data
+stays, and running setup again keeps it.
 
-Repeat setup to apply migrations without resetting records or credentials.
-Ctrl-C stops the development servers; the named PostgreSQL volume persists.
-Custom existing configuration or conflicting ports are preserved and reported.
-The development-only database password is not suitable for a public database.
+## Under the hood
 
-## v1 features
+Built with React, TypeScript, Fastify and PostgreSQL. In production, one process
+serves both the interface and the API.
 
-- Public chronological feed and member profiles, with cursor pagination (six posts per page).
-- Public post/member search with literal, case-insensitive matching and cursor pagination.
-- Follow/unfollow from profiles, with follower/following counts and a private
-  following feed. Repeating a follow or unfollow is safe; self-follow is rejected.
-- Member sign-in, separate sessions, publishing and one-level replies.
-- Author-only editing and deletion with stale-edit conflict detection.
-- Deleted posts erase their text and leave a placeholder so replies retain context.
-- Personal hide/unhide and reports with moderator-only review, dismissal/removal and decision history.
-- Plain-text content, 2,000-character limit, responsive layouts and keyboard focus.
-- Consistent portfolio-family styling through [design tokens](src/client/tokens.css).
+| Worth reading                                        | Why                                         |
+| ---------------------------------------------------- | ------------------------------------------- |
+| [`PostCard.tsx`](src/client/components/PostCard.tsx) | One component for feed, profile and thread  |
+| [`posts.ts`](src/server/posts.ts)                    | Ownership and version checks on every write |
+| [`moderation.ts`](src/server/moderation.ts)          | Reports, decisions and their history        |
+| [`browser.ts`](tests/browser.ts)                     | Two members working through the app at once |
 
-The following feed includes top-level posts from followed members, newest first;
-your own posts and replies stay in their community/thread views. An empty feed
-links back to the community to find people. Viewing it requires sign-in.
+## What it leaves out
 
-Search matches text in top-level posts, or usernames, names and bios in the
-Members category. Post results are newest first; members are ordered by username.
-Replies, personally hidden posts, and deleted/removed post text are excluded. Queries are limited to 120 characters;
-there is no fuzzy matching or relevance ranking. The query and category stay in
-the URL for refresh, sharing and Back navigation. Pagination restarts on refresh.
+This is a small project. Accounts are created by an administrator, so
+there's no public registration or password reset. There are also no uploads,
+notifications, nested reply trees or third-party sign-in.
 
-This is a small v1 with administrator-created accounts. Registration, password
-reset, uploads, notifications, nested reply trees and third-party sign-in are
-outside its scope. Do not deploy the local credentials as a shared writable
-public demo.
+## Going further
 
-## Reports and moderation
+- [Architecture](docs/ARCHITECTURE.md): how search, moderation, navigation and
+  security behave
+- [Deployment](docs/DEPLOYMENT.md): containers, accounts and sample data
+- [Contributing](CONTRIBUTING.md): where things live and how to run the tests
+- [Design](DESIGN.md): the visual rules
 
-Hide for me affects only your view. Unhide from **Hidden posts**. Reporting is a
-separate action: it neither hides the post nor removes it automatically. One
-report per member/post is retained, with a snapshot of the reported text.
-
-Sign in as **moderator** locally to review open reports. Dismiss leaves the post
-unchanged; Remove redacts it for everyone, preserves its thread placeholder, and
-blocks author edits/new replies. Existing replies remain. Each decision requires
-a note and records the reviewer/time. The original body and report snapshot are
-retained in the database for review. Report evidence is available only through
-moderator routes, not ordinary member or public APIs. Reviewed decisions cannot
-be overwritten; multiple reports on a post are reviewed individually.
-
-## Create an account
-
-Account creation is an administrative command, never a public endpoint. After
-configuring .env and applying migrations, use Bash to keep the password out of
-history and process arguments:
-
-```sh
-read -rs -p 'New member password (12+ characters): ' blog_password
-printf '%s' "$blog_password" | npm run --silent member:create -- --username membername --name 'Member Name'
-unset blog_password
-```
-
-Append `--moderator` only for a trusted reviewer. Existing accounts are never
-overwritten or promoted by this command. In a built container the equivalent
-command is `node dist/server/provision.js --username membername --name 'Member Name'`,
-with the protected application environment and password on stdin. There is no
-public role-changing endpoint.
-
-## Container
-
-```sh
-podman build -t localhost/anq-blog:v1 .
-```
-
-The pinned multi-stage image runs as the Node user, serves port 8080, and excludes
-.env, credentials, tests and development dependencies. Set DATABASE_URL and the
-exact HTTPS APP_ORIGIN in the protected environment. Run
-`node dist/server/migrate.js` explicitly before startup, or configure it as
-a pre-start migration step in your deployment. Keep encrypted PostgreSQL backups
-and verify recovery with an isolated restore.
-No uploads or persistent application filesystem are required. The image supports
-a read-only filesystem with a writable /tmp. Route the app at /; prefix hosting
-is not supported by its current absolute links.
-
-See [contributing](CONTRIBUTING.md) for the source map and
-[design conventions](DESIGN.md) for visual changes.
-
-## Verify
-
-```sh
-npm run typecheck
-npm run build
-npm run format:check
-TEST_DATABASE_URL=postgres://postgres:local-development-only@127.0.0.1:55434/anq_blog npm test
-TEST_DATABASE_URL=postgres://postgres:local-development-only@127.0.0.1:55434/anq_blog npm run test:browser
-npm run test:local
-TEST_DATABASE_URL=postgres://postgres:local-development-only@127.0.0.1:55434/anq_blog npm run test:container
-```
-
-The container check requires the locally built image and free loopback port 18086.
-It uses host networking only for the isolated local PostgreSQL check, runs as the
-Node user with a read-only filesystem, and removes its test container afterward.
-
-API, browser and container checks create and remove isolated random schemas, never reset the
-local member workspace. Install a Playwright Chromium build for your OS; on
-NixOS set `CHROMIUM_EXECUTABLE` to a working Nix Chromium binary. `test:local`
-requires the running development servers and uses generated passwords privately;
-it signs in/out without modifying posts.
-
-Database tests cover cross-member authorization, sessions, stale edits, validation,
-replies, moderator authorization, report concurrency/snapshots, personal hides,
-administrative provisioning, follow isolation/idempotency and cursor ordering with PostgreSQL microsecond ties. Browser checks
-exercise two separate member sessions, persistence after refresh, editing,
-deletion, profiles, follow/unfollow, following-feed sign-out/re-entry, paging,
-mobile overflow and automated accessibility scans.
-That scan is not a complete manual accessibility audit.
-
-Sessions use random opaque tokens stored as SHA-256 hashes, expire after 12 hours,
-and use HttpOnly/SameSite cookies. Passwords use scrypt. Mutations require the
-configured Origin; non-local configuration requires HTTPS. Login and write routes
-are rate limited. SQL uses bound parameters. Migrations are explicit, not run on
-server startup. Production build serves UI and API together via `npm start`.
-
-Try the [public demo](https://blog.demo.adaalrf.dev) with fictional content.
-See [deployment](docs/DEPLOYMENT.md) for hosting configuration.
-
-## Navigation and loading
-
-Internal links and search forms update browser history without reloading the
-document. Back/Forward and direct links still work; modified clicks/new tabs
-retain normal browser behaviour. Session state is rechecked on navigation.
-Pagination retains the displayed posts while loading the next result and disables
-page controls until it finishes; a new route/query starts at page one. There is
-no live polling loop. The masthead stays at the top while the page scrolls, and the
-page background spans the complete document, including long-page screenshots.
-
-## Working on the project
-
-See [contributing and development](CONTRIBUTING.md) for the source map, everyday
-commands, test prerequisites and troubleshooting. `npm run dev` starts both the
-API and Vite after local setup; `dev:local` remains an alias. For a custom manual
-configuration, run `npm run dev:server` and `npm run dev:client` separately.
-
-To add the fictional sample community after migrations, run `SEED_DEMO=true DATABASE_URL=… npm run seed` against your intended demo database. It adds 18 conversations with replies, profiles, follows and a removed-post example. Repeating the command preserves existing posts, edits, passwords and roles. Sample accounts have discarded random passwords; this does not create a public login. Set `DEMO_NOTICE=true` to show the sample-content notice and case-study link. Permissions are unchanged.
-
-Production writes structured server errors to the service log. PostgreSQL connections have a 5-second acquisition timeout and queries a 10-second statement timeout; Fastify’s request timeout applies to receiving requests.
-
-Author deletion clears the post body, but existing reports retain their text snapshot for moderators. Moderator removal hides a post while preserving its stored text.
+The [first public commit](https://github.com/adaalrf/anq-blog/commit/6cc9203) is a
+squashed snapshot of earlier work; changes since then are recorded one by one.

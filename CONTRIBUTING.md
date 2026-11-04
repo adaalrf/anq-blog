@@ -15,12 +15,14 @@ applies ordered migrations, and creates fictional local data and credentials.
 Read `.local/member-credentials.json` privately to sign in. Repeat setup is designed to
 preserve existing data and credentials; it refuses custom `.env` configurations.
 Ctrl-C stops the API and Vite, leaving the database and its named volume intact.
-No production credentials or remote service is needed.
+No production credentials or remote service is needed. The API runs on loopback port
+8082 and PostgreSQL on 55434. Custom configuration and conflicting ports are
+preserved and reported.
 
 `npm run dev:local` is the same combined workflow. `dev:server` loads `.env` and
 watches only the API; `dev:client` runs Vite separately for manual configurations.
-If a local port is occupied, stop the process you own or follow the README's
-manual configuration route. Setup/dev do not stop someone else's process or
+If a local port is occupied, stop the process you own or configure `.env` from
+`.env.example` and use those separate commands. Setup/dev do not stop someone else's process or
 replace its configuration. Do not copy a production `.env` into local setup.
 
 ## Where changes belong
@@ -59,11 +61,27 @@ npx playwright install chromium
 TEST_DATABASE_URL=postgres://postgres:local-development-only@127.0.0.1:55434/anq_blog npm run test:browser
 ```
 
-`check` runs type checks, API/domain tests and the production build. Build before
+`check` runs formatting, type checks, API/domain tests and the production build. Build before
 running browser checks so they use current client assets. On NixOS, set
 `CHROMIUM_EXECUTABLE=/absolute/path/to/chromium` instead of installing a browser.
 Browser tests use fictional records and isolated schemas; their screenshots must
 never contain private content.
+
+API, browser and container checks create and remove isolated random schemas, and
+never reset the local member workspace. Database tests cover cross-member
+authorization, sessions, stale edits, validation, replies, moderator authorization,
+report concurrency and snapshots, personal hides, administrative provisioning,
+follow isolation and idempotency, and cursor ordering with PostgreSQL microsecond
+ties. Browser checks exercise two separate member sessions, persistence after
+refresh, editing, deletion, profiles, follow and unfollow, following-feed sign-out
+and re-entry, paging, mobile overflow and automated accessibility scans. Those scans
+are not a complete manual accessibility audit.
+
+To check the production container, build it with `podman build -t localhost/anq-blog:v1 .`,
+then run `npm run test:container` with the same `TEST_DATABASE_URL`, or set
+`CONTAINER_IMAGE` to test a different tag. It needs free loopback port 18086, uses
+host networking only for the isolated local PostgreSQL check, runs as the Node user
+with a read-only filesystem, and removes its test container afterward.
 
 With the local workspace running, `npm run test:local` checks the actual Vite
 proxy and owner/member login without modifying saved application content. It
@@ -80,7 +98,7 @@ runtime images to Git. Preserve existing signing settings.
 Local sample members and the moderator have independent generated passwords.
 Public demo visitors can browse; publishing requires a provisioned member.
 Keep post text escaped through React and check ownership/moderator authority on
-the server. Read [design](DESIGN.md) and the README scope before expanding it.
+the server. Read [design](DESIGN.md) and the limits in the README before expanding it.
 
 For visual changes, use the local CSS tokens and preserve contrast, visible
 keyboard focus, readable errors and text labels for status. Colour alone must
