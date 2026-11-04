@@ -126,7 +126,21 @@ export function AppShell({
           {demoNotice && (
             <aside className="demo-notice" aria-label="About this demo">
               <p>Fictional sample community; publishing needs an account.</p>
-              <a href="https://adaalrf.dev/work/anq-blog/">A project by Martin Røed Flyum</a>
+              <a href="https://adaalrf.dev/work/anq-blog/">
+                A project by Martin Røed Flyum
+                <svg
+                  className="link-arrow"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 12 12 4M4 4h8v8" />
+                </svg>
+              </a>
             </aside>
           )}
           {children}

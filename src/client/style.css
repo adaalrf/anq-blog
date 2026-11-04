@@ -43,6 +43,13 @@ main:focus,
 .workspace h1:focus {
   outline: none;
 }
+.link-arrow {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-left: 0.25em;
+  vertical-align: -0.125em;
+}
 /* The family's 44px target: an invisible hit area, so small links keep their layout. */
 .demo-notice a,
 .post-byline a,
