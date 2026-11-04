@@ -32,9 +32,12 @@
     }
   });
   addEventListener('blog-theme-set', (event) => {
-    preference = valid(event.detail);
+    const chosen = valid(event.detail);
+    // Choosing what the system already shows hands the choice back to the system.
+    preference = chosen === (system.matches ? 'dark' : 'light') ? 'system' : chosen;
     try {
-      localStorage.setItem(key, preference);
+      if (preference === 'system') localStorage.removeItem(key);
+      else localStorage.setItem(key, preference);
     } catch {
       /* Page-local choice still works. */
     }

@@ -90,6 +90,12 @@ export async function checkNavigationTheme(source: Page, origin: string, hasMenu
     await other.getByRole('switch', { name: 'Dark mode' }).click();
     await expect(appearance).toHaveAttribute('aria-checked', 'false');
     await other.close();
+    // Light on a light system hands the choice back, so the site follows the system again.
+    assert.equal(await page.evaluate(() => localStorage.getItem('anq-blog-theme')), null);
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await expect(appearance).toHaveAttribute('aria-checked', 'true');
+    await page.emulateMedia({ colorScheme: 'light' });
+    await expect(appearance).toHaveAttribute('aria-checked', 'false');
     await page.evaluate(() => localStorage.removeItem('anq-blog-theme'));
     await page.reload();
     await page.emulateMedia({ colorScheme: 'dark' });
