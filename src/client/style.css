@@ -313,7 +313,16 @@ textarea {
 }
 
 /* The stream: one column of posts, each opening with its author. */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 .workspace {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
   max-width: calc(var(--width-page) + 2 * var(--space-5));
   margin: 0 auto;
   padding: 0 var(--space-5);
@@ -539,7 +548,9 @@ main {
   background: var(--color-surface-soft);
 }
 
+/* Starts below the fold, so it doesn't jump when the posts arrive. */
 .site-footer {
+  margin-top: auto;
   border-top: 1px solid var(--color-line);
   padding: var(--space-5) 0 var(--space-7);
   color: var(--color-muted);
