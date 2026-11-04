@@ -2,8 +2,7 @@
 
 [![Checks](https://github.com/adaalrf/anq-blog/actions/workflows/check.yml/badge.svg)](https://github.com/adaalrf/anq-blog/actions/workflows/check.yml)
 
-A small community where people post, reply and follow each other, and where a
-conversation stays whole.
+A small community blog, built to understand how one actually works.
 
 [Browse the demo](https://blog.demo.adaalrf.dev) · [Read the case study](https://adaalrf.dev/work/anq-blog/)
 
@@ -12,41 +11,37 @@ conversation stays whole.
 The demo is open to browse and holds fictional conversations. Publishing needs an
 account.
 
-## The problem
+## Why it exists
 
-A small group doesn't need a large social network, but it does need the things
-those networks quietly get right. People want to read a conversation from start
-to finish, come back to it later, and trust that it hasn't changed or fallen
-apart in the meantime.
+Posting text is the easy part of a community site. The interesting questions come
+afterwards. What should happen when two open tabs edit the same post? When someone
+deletes a post that already has replies? When a moderator removes something, but
+there still needs to be a record of why?
 
-Those are the details that break in simple software. An edit in one tab overwrites
-a newer one in another. A deleted post leaves its replies with nothing to answer.
-A moderator removes something, and no one can tell what happened or why.
+This project works through those questions by building the whole thing rather than
+reaching for an existing platform. It isn't meant to replace one, but if it's useful
+to someone, that's a good thing.
 
-## The solution
+## What it does
 
-ANQ Blog keeps a conversation in one piece, wherever it's read:
-
-- **Read without an account.** The feed, profiles, threads and search are public.
-- **Publish and reply.** Members write short plain-text posts and answer each other.
-- **Follow people.** A personal feed shows the latest posts from members you follow.
-- **Edit safely.** If a post changed since you opened it, your edit is stopped, so
-  nothing newer gets overwritten.
-- **Delete without breaking threads.** A deleted post leaves a placeholder, so the
-  replies keep their context.
-- **Moderate in the open.** Members can hide a post for themselves or report it.
-  Moderators review each report and record a reason for every decision.
+- Anyone can read the feed, profiles, threads and search.
+- Members can publish short plain-text posts and reply to each other.
+- Members can follow each other, with a feed of the people they follow.
+- An edit is stopped if the post changed after it was opened.
+- A deleted post leaves a placeholder, so its replies keep their context.
+- Members can hide a post for themselves or report it, and moderators record a
+  reason for each decision.
 
 ## How it works
 
-The feed, a profile and a thread all use the same post component, so a post looks
-and behaves the same everywhere it appears. Each post carries a version number,
-and the server refuses any write based on an older one. That one rule is what
-stops two open tabs from overwriting each other.
+The feed, a profile and a thread all use the same post component, so a post behaves
+the same everywhere it appears. Each post carries a version number, and the server
+refuses a write based on an older one, which is what stops two open tabs from
+overwriting each other.
 
 Ownership and moderator rights are checked on the server, never only in the
 interface. Links, search and paging update the browser's history, so Back, Forward
-and shared links all work as you'd expect.
+and shared links work.
 
 ## Try it yourself
 
@@ -78,7 +73,7 @@ serves both the interface and the API.
 
 ## What it leaves out
 
-This is a deliberately small project. Accounts are created by an administrator, so
+This is a small project. Accounts are created by an administrator, so
 there's no public registration or password reset. There are also no uploads,
 notifications, nested reply trees or third-party sign-in.
 
