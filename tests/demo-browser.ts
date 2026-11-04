@@ -33,6 +33,7 @@ try {
   await expect(page.getByRole('complementary', { name: 'About this demo' })).toContainText(
     'Fictional sample community',
   );
+  await expect(page.locator('.site-footer')).toBeVisible();
   await expect(page.getByRole('link', { name: 'A project by Martin Røed Flyum' })).toHaveAttribute(
     'href',
     'https://adaalrf.dev/work/anq-blog/',

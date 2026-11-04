@@ -555,7 +555,10 @@ main {
   background: var(--color-surface-soft);
 }
 
-/* Starts below the fold, so it doesn't jump when the posts arrive. */
+/* Waits for the content: at the bottom of an empty page, it would jump when posts arrive. */
+main[aria-busy='true'] ~ .site-footer {
+  visibility: hidden;
+}
 .site-footer {
   margin-top: auto;
   border-top: 1px solid var(--color-line);
