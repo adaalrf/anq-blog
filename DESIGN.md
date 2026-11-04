@@ -44,7 +44,7 @@ and add it to Departures above.
 
 Core rules, identical in every ANQ project:
 
-1. **Two faces.** Source Serif 4 (`--font-body`, `--font-heading`, optical
+1. **Two faces.** Source Serif 4, served as ANQ Serif (`--font-body`, `--font-heading`, optical
    sizing on) for language; IBM Plex Mono (`--font-mono`) for controls:
    navigation, buttons, standalone links, tags, labels, dates, pagination. No
    sans-serif. Self-hosted woff2; the CSP needs `font-src 'self'`.
